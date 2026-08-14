@@ -35,4 +35,3 @@ main{padding:26px 24px 90px}
 .anvil-live .hero{display:none}.anvil-live main{padding-top:14px}#anvilTool.live-mode>.capture-panel .capture-actions{grid-template-columns:1fr}#anvilTool.live-mode #uploadAnvil,#anvilTool.live-mode #analyzeAnvil{display:none}
   
 #anvilTool.static-image-mode #anvilResults{border-top:0;padding-top:0}#anvilTool.static-image-mode #anvilResults .result-head,#anvilTool.static-image-mode #anvilNext{display:none}#anvilTool.static-image-mode #anvilSequence{margin-top:0}
-.anvil-constraint{margin-top:7px;height:38px;font-size:11px}.anvil-constraint:disabled{opacity:.55}.rule-preview span{line-height:1.3}
