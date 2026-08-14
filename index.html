@@ -4,24 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#16130f">
-  <title>TFG Alloy Forge — kalkulator proporcji</title>
-  <style>
-:root{--bg:#16130f;--panel:#211d17;--panel2:#29231b;--line:#3a3228;--cream:#f3ead8;--muted:#a69b89;--orange:#ef7028;--orange2:#ff9d52;--green:#9cb76e;--copper:#c97842}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 75% 12%,#382419 0,transparent 28%),var(--bg);color:var(--cream);font:15px Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;min-height:100vh}.topbar{height:70px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(24px,calc((100vw - 1180px)/2));background:#17140fdd;position:sticky;top:0;backdrop-filter:blur(12px);z-index:3}.brand{display:flex;align-items:center;gap:12px;color:var(--cream);text-decoration:none;letter-spacing:2px;font-size:13px}.brand b{color:var(--orange)}.brand-mark{display:grid;place-items:center;width:34px;height:34px;background:var(--orange);color:#21130a;font:bold 20px Georgia;transform:rotate(45deg);border-radius:4px}.brand-mark::first-letter{transform:rotate(-45deg)}button,select,input{font:inherit}.top-actions{display:flex;align-items:center;gap:18px}.ghost{background:none;border:0;color:var(--muted);cursor:pointer}.version{font-size:11px;padding:6px 9px;border:1px solid var(--line);color:var(--muted);border-radius:3px}main{max-width:1180px;margin:auto;padding:55px 24px 90px}.hero{display:flex;justify-content:space-between;align-items:center;margin-bottom:45px}.eyebrow{font-size:11px;letter-spacing:3px;color:var(--orange);font-weight:800;margin:0 0 13px}.hero h1{font:700 clamp(40px,6vw,72px)/.98 Georgia,serif;margin:0;letter-spacing:-3px}.hero h1 em{font-weight:400;color:var(--orange2)}.lede{color:var(--muted);max-width:510px;font-size:17px;line-height:1.6}.ingot-art{width:250px;text-align:center;position:relative}.ingot{margin:auto;width:150px;height:94px;display:grid;place-items:center;background:linear-gradient(145deg,#f1a261,#a74622);clip-path:polygon(17% 0,83% 0,100% 28%,86% 100%,14% 100%,0 28%);font:700 34px Georgia;box-shadow:inset 0 10px 20px #ffd2a355;color:#4b1e0d}.ingot-art>span{display:block;margin-top:12px;font:700 22px Georgia;color:var(--copper)}.ingot-art small{font:12px sans-serif;margin-left:3px}.workspace{display:grid;grid-template-columns:.9fr 1.1fr;gap:18px}.panel{background:linear-gradient(150deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:5px;padding:26px}.panel-title{display:flex;gap:14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:19px;margin-bottom:20px}.panel-title>span{font:italic 28px Georgia;color:var(--orange)}h2,h3,p{margin-top:0}.panel-title h2{font:700 20px Georgia;margin:0 0 4px}.panel-title p{color:var(--muted);font-size:12px;margin:0}label{display:block;color:#c8beae;font-size:12px;font-weight:700;letter-spacing:.4px;margin:16px 0 7px}select,input{width:100%;height:46px;border:1px solid #4a4033;background:#181510;color:var(--cream);padding:0 13px;border-radius:3px;outline:none}select:focus,input:focus{border-color:var(--orange)}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}.unit-input{position:relative}.unit-input input{padding-right:45px}.unit-input span{position:absolute;right:13px;top:14px;color:var(--muted);font-size:12px}.recipe-info{display:flex;gap:6px;flex-wrap:wrap}.ratio-pill{background:#17130f;border:1px solid var(--line);padding:7px 9px;font-size:11px;color:var(--muted)}.ratio-pill b{color:var(--cream)}.check{display:flex;align-items:center;gap:9px;font-weight:500}.check input{display:none}.check span{width:18px;height:18px;border:1px solid #5c5040;display:grid;place-items:center}.check input:checked+span{background:var(--orange);border-color:var(--orange)}.check input:checked+span:after{content:'✓';color:#20140c;font-weight:bold}.material-row{display:grid;grid-template-columns:1fr 1.15fr;gap:15px;padding:10px 0;border-bottom:1px solid #342d24}.metal-name{display:flex;align-items:center;gap:10px;font-weight:700}.dot{width:11px;height:11px;border-radius:50%;box-shadow:0 0 12px currentColor}.sizes{display:flex;gap:8px}.sizes .unit-input{flex:1}.add-btn{margin-top:18px;width:100%;border:1px dashed #5a4c3d;background:transparent;color:var(--muted);height:40px;cursor:pointer}.calculate{width:100%;height:62px;background:linear-gradient(90deg,#d65720,var(--orange));color:#231209;border:0;margin:18px 0 38px;display:flex;justify-content:center;align-items:center;gap:20px;font-weight:900;letter-spacing:1.5px;cursor:pointer;box-shadow:0 8px 30px #ef702833}.calculate b{font-size:24px}.hidden{display:none}.results{border-top:1px solid var(--line);padding-top:36px}.result-head{display:flex;justify-content:space-between;align-items:center}.result-head h2{font:700 34px Georgia;margin:0}.badge{font-size:11px;letter-spacing:1.5px;color:#cfe6a4;border:1px solid #70834f;background:#33402666;padding:9px 12px}.badge.bad{color:#ffc0a8;border-color:#9b4f35}.result-grid{display:grid;grid-template-columns:1.45fr .75fr;gap:18px;margin-top:24px}.result-cards{display:grid;gap:10px}.result-card{background:var(--panel);border:1px solid var(--line);padding:18px;display:grid;grid-template-columns:1fr auto;align-items:center}.result-card h3{font:700 21px Georgia;margin-bottom:5px}.result-card p{color:var(--muted);font-size:12px;margin:0}.result-card .count{font:700 28px Georgia;color:var(--orange2);text-align:right}.result-card .count small{display:block;font:11px sans-serif;color:var(--muted)}.summary-card{background:#252018;border:1px solid var(--line);padding:22px}.summary-card h3{font:700 18px Georgia}.fill-track{height:7px;background:#14110e;margin:20px 0 10px}.fill-track div{height:100%;background:linear-gradient(90deg,#c55020,#ff9a4a);width:0;transition:.4s}.big-stat{font:700 31px Georgia;margin-bottom:22px}.big-stat small{font:13px sans-serif;color:var(--muted)}dl{margin:0}dl div{display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid var(--line);font-size:12px}dt{color:var(--muted)}dd{margin:0;font-weight:700}.copy{width:100%;height:40px;margin-top:16px;background:transparent;border:1px solid var(--orange);color:var(--orange2);cursor:pointer}.solver-note{color:var(--muted);font-size:12px;margin-top:15px}footer{text-align:center;border-top:1px solid var(--line);padding:25px;color:#6f675b;font-size:11px}.custom-actions p{color:var(--muted);font-size:11px;margin:8px 0 0}.custom-editor{display:grid;grid-template-columns:1.3fr .7fr .7fr auto;gap:7px;align-items:end;margin-bottom:8px}.custom-editor label{margin:0}.custom-editor input{height:38px}.remove-metal{height:38px;width:38px;background:#281712;border:1px solid #713b2b;color:#ec7950;cursor:pointer}.custom-metal .sizes{grid-column:1/-1}.custom-metal{display:block}.custom-metal>.sizes{margin-top:10px}@media(max-width:800px){.ingot-art{display:none}.workspace,.result-grid{grid-template-columns:1fr}.hero{margin-top:10px}.hero h1{font-size:48px}.topbar{padding:0 16px}.version{display:none}main{padding:38px 16px 60px}.two-col{grid-template-columns:1fr}.result-head{align-items:flex-end}.badge{font-size:9px}.material-row{grid-template-columns:1fr}.calculate span{font-size:12px}.custom-editor{grid-template-columns:1fr 1fr 1fr auto}.custom-editor label:first-child{grid-column:1/-1}}
-
-</style>
-  <style>
-    .custom-editor{grid-template-columns:1.5fr .7fr auto}
-    input:disabled{opacity:.48;cursor:not-allowed;background:#12100d}
-    input[type=number]{appearance:textfield;-moz-appearance:textfield}
-    input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
-    .sizes{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:8px}
-    .sizes .unit-input{min-width:0}
-    @media(max-width:800px){.custom-editor{grid-template-columns:1fr .7fr auto}.custom-editor label:first-child{grid-column:auto}.sizes{grid-template-columns:repeat(2,minmax(0,1fr))}}
-  </style>
+  <title>TFG Toolkit — stopy, Bloomery i kowadło</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="#"><span class="brand-mark">T</span><span>TFG <b>ALLOY FORGE</b></span></a>
+    <a class="brand" href="#"><span class="brand-mark">T</span><span>TFG <b>TOOLKIT</b></span></a>
     <div class="top-actions"><button id="resetBtn" class="ghost">↻ Wyczyść</button><span class="version">Modern · 0.11</span></div>
   </header>
 
@@ -31,6 +19,13 @@
       <div class="ingot-art" aria-hidden="true"><div class="ingot">Cu</div><span>3024<small>mB</small></span></div>
     </section>
 
+    <nav class="tool-tabs" aria-label="Kalkulatory">
+      <button class="tool-tab active" data-tool="alloy">⚗ Stopy</button>
+      <button class="tool-tab" data-tool="bloomery">♨ Bloomery</button>
+      <button class="tool-tab" data-tool="anvil">⚒ Kowadło</button>
+    </nav>
+
+    <div id="alloyTool" class="tool-view active">
     <section class="workspace">
       <aside class="panel setup">
         <div class="panel-title"><span>01</span><div><h2>Ustawienia wytopu</h2><p>Wybierz stop i pojemność</p></div></div>
@@ -71,52 +66,58 @@
       </div>
       <p id="solverNote" class="solver-note"></p>
     </section>
+    </div>
+
+    <div id="bloomeryTool" class="tool-view">
+      <section class="workspace">
+        <aside class="panel setup">
+          <div class="panel-title"><span>01</span><div><h2>Parametry Bloomery</h2><p>Pojemność konstrukcji i materiał</p></div></div>
+          <div class="two-col">
+            <label>Maks. liczba przedmiotów<div class="unit-input"><input id="bloomCapacity" type="number" min="1" value="112"><span>szt.</span></div></label>
+            <label>Dostępny pył<div class="unit-input"><input id="bloomAvailable" type="number" min="0" value="0"><span>szt.</span></div></label>
+          </div>
+          <label>Żelazo w jednej porcji<div class="unit-input"><input id="bloomMbItem" type="number" min="1" value="129"><span>mB</span></div></label>
+          <p class="field-help">Wartość 0 przy dostępnym pyle oznacza: wykorzystaj maksymalną pojemność pieca.</p>
+        </aside>
+        <section class="panel materials">
+          <div class="panel-title"><span>02</span><div><h2>Przelicznik procesu</h2><p>Możesz dopasować do wersji moda</p></div></div>
+          <div class="two-col">
+            <label>mB żelaza na bloom<div class="unit-input"><input id="bloomMbPer" type="number" min="1" value="100"><span>mB</span></div></label>
+            <label>Węgiel na bloom<div class="unit-input"><input id="bloomCoalPer" type="number" min="0" value="2"><span>szt.</span></div></label>
+          </div>
+          <label class="check"><input id="bloomWhole" type="checkbox" checked><span></span>Nie wkładaj żelaza, które nie zwiększy liczby bloomów</label>
+          <div class="info-box">Aktualny Field Guide: 100 mB żelaza + 2 charcoal = 1 bloom. Kalkulator pilnuje również łącznego limitu przedmiotów.</div>
+        </section>
+      </section>
+      <button id="bloomCalculate" class="calculate"><span>OBLICZ WSAD DO BLOOMERY</span><b>→</b></button>
+      <section id="bloomResults" class="results hidden"><div class="result-head"><div><p class="eyebrow">GOTOWY WSAD</p><h2>Rozpiska Bloomery</h2></div><div class="badge">BEZ PRZEKROCZENIA LIMITU</div></div><div id="bloomCards" class="metric-grid"></div><p id="bloomNote" class="solver-note"></p></section>
+    </div>
+
+    <div id="anvilTool" class="tool-view">
+      <section class="workspace">
+        <aside class="panel setup">
+          <div class="panel-title"><span>01</span><div><h2>Pozycja na kowadle</h2><p>Odczytaj wartości z interfejsu gry</p></div></div>
+          <div class="two-col">
+            <label>Aktualna wartość<input id="anvilStart" type="number" min="0" max="150" value="0"></label>
+            <label>Wartość docelowa<input id="anvilTarget" type="number" min="0" max="150" value="80"></label>
+          </div>
+          <p class="field-help">Do odczytania dokładnego celu potrzebny jest resource pack pokazujący wartości kowadła.</p>
+        </aside>
+        <section class="panel materials">
+          <div class="panel-title"><span>02</span><div><h2>Reguły końcowe</h2><p>Ustaw ikony od lewej do prawej</p></div></div>
+          <div class="three-col">
+            <label>3. od końca<select id="ruleThird" class="anvil-rule"></select></label>
+            <label>2. od końca<select id="ruleSecond" class="anvil-rule"></select></label>
+            <label>Ostatnia<select id="ruleLast" class="anvil-rule"></select></label>
+          </div>
+          <div class="action-legend"><span>Hit: −3/−6/−9</span><span>Draw: −15</span><span>Punch: +2</span><span>Bend: +7</span><span>Upset: +13</span><span>Shrink: +16</span></div>
+        </section>
+      </section>
+      <button id="anvilCalculate" class="calculate"><span>ZNAJDŹ NAJKRÓTSZĄ SEKWENCJĘ</span><b>→</b></button>
+      <section id="anvilResults" class="results hidden"><div class="result-head"><div><p class="eyebrow">PERFECTLY FORGED</p><h2>Sekwencja uderzeń</h2></div><div class="badge">NAJKRÓTSZA ŚCIEŻKA</div></div><div id="anvilSequence" class="anvil-sequence"></div><p id="anvilNote" class="solver-note"></p></section>
+    </div>
   </main>
-  <footer>Dane receptur: TFG / TFC Field Guide · Kalkulator działa lokalnie</footer>
-  <script>
-const ALLOYS = {
-  bronze:{name:'Brąz', metals:[['Miedź',88,92,'#d7783e'],['Cyna',8,12,'#b8b3a9']]},
-  bismuth:{name:'Brąz bizmutowy', metals:[['Miedź',50,65,'#d7783e'],['Cynk',20,30,'#a9a7a0'],['Bizmut',10,20,'#d4a8bd']]},
-  black:{name:'Czarny brąz', metals:[['Miedź',50,70,'#d7783e'],['Srebro',10,25,'#d7d9da'],['Złoto',10,25,'#e8b53f']]},
-  brass:{name:'Mosiądz', metals:[['Miedź',88,92,'#d7783e'],['Cynk',8,12,'#a9a7a0']]},
-  rose:{name:'Różowe złoto', metals:[['Miedź',15,30,'#d7783e'],['Złoto',70,85,'#e8b53f']]},
-  sterling:{name:'Srebro sterlingowe', metals:[['Miedź',20,40,'#d7783e'],['Srebro',60,80,'#d7d9da']]},
-  custom:{name:'＋ Dodaj własny stop…', metals:[['Miedź',50,50,'#d7783e'],['Cynk',50,50,'#d7d9da']]}
-};
-const $=s=>document.querySelector(s); let sizes=[144,36]; let lastText='';
-const alloySelect=$('#alloySelect'); alloySelect.add(new Option(ALLOYS.custom.name,'custom'));Object.entries(ALLOYS).filter(([k])=>k!=='custom').forEach(([k,a])=>alloySelect.add(new Option(a.name,k))); alloySelect.value='black';
-
-function render(){const a=ALLOYS[alloySelect.value],custom=alloySelect.value==='custom';$('#customActions').classList.toggle('hidden',!custom);$('#recipeInfo').innerHTML=a.metals.map(m=>`<span class="ratio-pill"><b>${m[0]}</b> ${custom?m[1]+'%':m[1]+'–'+m[2]+'%'}</span>`).join('');$('#materialRows').innerHTML=a.metals.map((m,i)=>custom?`<div class="material-row custom-metal" data-i="${i}"><div class="custom-editor"><label>Materiał<input class="custom-name" value="${m[0]}" maxlength="30" placeholder="np. Miedź"></label><label>Udział %<input class="custom-percent" type="number" min="0.01" max="100" step="0.01" value="${m[1]}"></label><button class="remove-metal" data-remove="${i}" title="Usuń materiał" ${a.metals.length<=2?'disabled':''}>×</button></div><div class="sizes">${sizes.map((s,j)=>`<div class="unit-input"><input aria-label="${m[0]} porcja ${j+1}" data-size="${j}" type="number" min="0" value="${s}"><span>mB</span></div>`).join('')}</div></div>`:`<div class="material-row" data-i="${i}"><div class="metal-name"><span class="dot" style="color:${m[3]};background:${m[3]}"></span>${m[0]}</div><div class="sizes">${sizes.map((s,j)=>`<div class="unit-input"><input aria-label="${m[0]} porcja ${j+1}" data-size="${j}" type="number" min="0" value="${s}"><span>mB</span></div>`).join('')}</div></div>`).join('');document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{a.metals.splice(+b.dataset.remove,1);render()})}
-
-function syncCustom(){if(alloySelect.value!=='custom')return;document.querySelectorAll('.material-row').forEach((r,i)=>{const m=ALLOYS.custom.metals[i],percent=+r.querySelector('.custom-percent').value;m[0]=r.querySelector('.custom-name').value.trim()||`Materiał ${i+1}`;m[1]=percent;m[2]=percent})}
-
-function solve(){syncCustom();const a=ALLOYS[alloySelect.value],cap=+$('#capacity').value||3024,target=$('#fillMax').checked?cap:Math.min(cap,+$('#target').value||cap);if(a.metals.some(m=>!Number.isFinite(m[1])||!Number.isFinite(m[2])||m[1]<=0||m[2]>100||m[1]>m[2]))return showError('Każdy udział procentowy musi być większy od 0 i nie może przekraczać 100%.');const minSum=a.metals.reduce((n,m)=>n+m[1],0),maxSum=a.metals.reduce((n,m)=>n+m[2],0);if(alloySelect.value==='custom'&&Math.abs(minSum-100)>0.0001)return showError(`Udziały własnego stopu muszą dawać dokładnie 100%. Teraz dają ${minSum.toFixed(2)}%.`);if(minSum>100||maxSum<100)return showError(`Z tych zakresów nie da się złożyć 100% stopu. Suma minimów: ${minSum}%, suma maksimów: ${maxSum}%.`);const rows=[...document.querySelectorAll('.material-row')];const units=rows.map(r=>[...r.querySelectorAll('.sizes input')].map(x=>+x.value).filter(x=>x>0));if(units.some(x=>!x.length))return showError('Każdy metal musi mieć przynajmniej jedną porcję większą od 0.');
-  const tables=units.map(us=>{
-    const dp=Array(target+1).fill(null);dp[0]={count:0,counts:Array(us.length).fill(0)};
-    for(let mb=1;mb<=target;mb++)for(let j=0;j<us.length;j++){
-      const u=us[j],prev=dp[mb-u];if(!prev)continue;
-      if(!dp[mb]||prev.count+1<dp[mb].count){const counts=prev.counts.slice();counts[j]++;dp[mb]={count:prev.count+1,counts}}
-    }
-    const list=[];for(let mb=1;mb<=target;mb++)if(dp[mb])list.push({mb,count:dp[mb].count,parts:dp[mb].counts.map((n,j)=>({u:us[j],n})).filter(p=>p.n).sort((x,y)=>y.u-x.u)});
-    return {list,byMb:new Map(list.map(o=>[o.mb,o]))};
-  });
-  const priority=$('#priority').value;let best=null;
-  const better=c=>{const score=priority==='items'?[c.count,-c.sum]:priority==='primary'?[c.chosen.slice(1).reduce((n,x)=>n+x.mb,0),-c.sum]:[-c.sum,c.count];c.score=score;if(!best||score[0]<best.score[0]||(score[0]===best.score[0]&&score[1]<best.score[1]))best=c};
-  const findAtTotal=total=>{
-    const lists=tables.map((t,i)=>t.list.filter(o=>{const pct=o.mb/total*100;return pct>=a.metals[i][1]-1e-9&&pct<=a.metals[i][2]+1e-9}));
-    if(lists.some(x=>!x.length))return false;let found=false;
-    const walk=(idx,chosen,sum,count)=>{
-      if(idx===tables.length-1){const last=tables[idx].byMb.get(total-sum);if(!last)return;const pct=last.mb/total*100;if(pct<a.metals[idx][1]-1e-9||pct>a.metals[idx][2]+1e-9)return;found=true;better({chosen:[...chosen,last],sum:total,count:count+last.count});return}
-      const remaining=total-sum;for(const o of lists[idx]){if(o.mb>=remaining)break;walk(idx+1,[...chosen,o],sum+o.mb,count+o.count)}
-    };walk(0,[],0,0);return found;
-  };
-  if(priority==='volume'){for(let total=target;total>0;total--)if(findAtTotal(total))break}else for(let total=1;total<=target;total++)findAtTotal(total);
-  if(!best)return showError('Nie ma poprawnej kombinacji dla tych rozmiarów porcji i pojemności. Dodaj mniejszą porcję (np. 16 lub 36 mB).');show(best,a,cap)}
-
-function show(b,a,cap){$('#results').classList.remove('hidden');$('#statusBadge').className='badge';$('#statusBadge').textContent='POPRAWNY STOP';$('#resultCards').innerHTML=b.chosen.map((x,i)=>{const pct=(x.mb/b.sum*100).toFixed(2);const detail=x.parts.map(p=>`${p.n} × ${p.u} mB`).join(' + ');return `<div class="result-card"><div><h3>${a.metals[i][0]}</h3><p>${detail} · ${x.mb} mB · ${pct}% (wymagane ${a.metals[i][1]}–${a.metals[i][2]}%)</p></div><div class="count">${x.count}<small>PORCJI</small></div></div>`}).join('');const fill=b.sum/cap*100;$('#fillBar').style.width=Math.min(100,fill)+'%';$('#totalMb').textContent=b.sum;$('#capacityOut').textContent=cap;$('#fillPercent').textContent=fill.toFixed(1)+'%';$('#itemCount').textContent=b.count;$('#ingotCount').textContent=Math.floor(b.sum/144);$('#remainder').textContent=(b.sum%144)+' mB';lastText=`${a.name} — ${b.sum} mB\n`+b.chosen.map((x,i)=>`${a.metals[i][0]}: ${x.parts.map(p=>`${p.n} × ${p.u} mB`).join(' + ')} = ${x.mb} mB (${(x.mb/b.sum*100).toFixed(2)}%)`).join('\n');$('#solverNote').textContent='Solver sprawdził całkowite kombinacje porcji mieszczące się w naczyniu i wybrał najlepszy wynik zgodnie z ustawionym priorytetem.';$('#results').scrollIntoView({behavior:'smooth',block:'start'})}
-function showError(msg){$('#results').classList.remove('hidden');$('#statusBadge').className='badge bad';$('#statusBadge').textContent='BRAK KOMBINACJI';$('#resultCards').innerHTML=`<div class="result-card"><div><h3>Nie udało się ułożyć stopu</h3><p>${msg}</p></div></div>`;$('#solverNote').textContent='Zmień wielkości porcji lub pojemność i spróbuj ponownie.'}
-alloySelect.onchange=render;$('#addSize').onclick=()=>{syncCustom();sizes.push(16);render()};$('#addMetal').onclick=()=>{syncCustom();if(ALLOYS.custom.metals.length>=4)return showError('Waza ma 4 sloty, dlatego własny stop może zawierać maksymalnie 4 materiały.');const i=ALLOYS.custom.metals.length+1;ALLOYS.custom.metals.push([`Materiał ${i}`,0,0,['#9cb76e','#72a9be','#b980cf','#df9b55'][i%4]]);render()};$('#calculateBtn').onclick=solve;$('#resetBtn').onclick=()=>{sizes=[144,36];alloySelect.value='black';ALLOYS.custom.metals=[['Miedź',50,50,'#d7783e'],['Cynk',50,50,'#d7d9da']];$('#capacity').value=$('#target').value=3024;$('#fillMax').checked=true;$('#target').disabled=true;render();$('#results').classList.add('hidden')};$('#capacity').oninput=e=>{if($('#fillMax').checked)$('#target').value=e.target.value};$('#fillMax').onchange=e=>{if(e.target.checked)$('#target').value=$('#capacity').value;$('#target').disabled=e.target.checked};$('#target').disabled=true;$('#copyBtn').onclick=async()=>{await navigator.clipboard.writeText(lastText);$('#copyBtn').textContent='Skopiowano ✓';setTimeout(()=>$('#copyBtn').textContent='Kopiuj rozpiskę',1400)};render();
-
-</script>
+  <footer>Mechaniki: TFG / TFC Field Guide · Kalkulatory działają lokalnie</footer>
+  <script src="app.js"></script>
 </body>
 </html>
