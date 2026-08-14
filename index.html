@@ -10,13 +10,12 @@
 <body data-tool="alloy">
   <header class="topbar">
     <a class="brand" href="#"><span class="brand-mark">T</span><span>TFG <b>TOOLKIT</b></span></a>
-    <div class="top-actions"><button id="resetBtn" class="ghost">↻ Wyczyść</button><span class="version">Modern · 0.11</span></div>
+    <div class="top-actions"><button id="resetBtn" class="ghost">↻ Wyczyść</button><span class="version">Modern · 0.22</span></div>
   </header>
 
   <main>
     <section class="hero">
-      <div><p class="eyebrow">NARZĘDZIE HUTNICZE</p><h1>Idealny stop.<br><em>Bez zgadywania.</em></h1><p class="lede">Dobierz całkowite porcje metalu, wypełnij naczynie i nie zmarnuj ani kropli.</p></div>
-      <div class="ingot-art" aria-hidden="true"><div class="ingot">Cu</div><span>3024<small>mB</small></span></div>
+      <div><p class="eyebrow">TFG TOOLKIT</p><h1>Kalkulator stopów</h1><p class="lede">Oblicza proporcje i liczbę porcji metali dla wybranej pojemności.</p></div>
     </section>
 
     <nav class="tool-tabs" aria-label="Kalkulatory">
@@ -32,15 +31,16 @@
         <label>Stop<select id="alloySelect"></select></label>
         <div id="recipeInfo" class="recipe-info"></div>
         <div id="customActions" class="custom-actions hidden">
-          <button id="addMetal" class="add-btn" type="button">＋ Dodaj materiał</button>
-          <p>Wpisane udziały materiałów muszą dawać dokładnie 100%.</p>
+          <label>Nazwa stopu<input id="customAlloyName" maxlength="30" placeholder="np. Mój brąz"></label>
+          <div class="custom-alloy-buttons"><button id="addMetal" class="add-btn" type="button">＋ Dodaj materiał</button><button id="saveCustomAlloy" class="add-btn save-alloy" type="button">✓ Dodaj stop do listy</button><button id="deleteCustomAlloy" class="add-btn delete-alloy hidden" type="button">Usuń stop</button></div>
+          <p id="customPercentStatus" class="custom-percent-status ok">Suma udziałów: 100% ✓</p>
+          <p>Udziały muszą dawać 100%. Zapisane stopy pojawią się na liście wyboru.</p>
         </div>
         <div class="two-col">
           <label>Pojemność naczynia<div class="unit-input"><input id="capacity" type="number" min="1" value="3024"><span>mB</span></div></label>
           <label>Docelowa ilość<div class="unit-input"><input id="target" type="number" min="1" value="3024" title="Odznacz wypełnienie do pełna, aby ustawić własny cel"><span>mB</span></div></label>
         </div>
         <label class="check"><input id="fillMax" type="checkbox" checked><span></span>Wypełnij do pełna (cel = pojemność)</label>
-        <label>Priorytet<select id="priority"><option value="volume">Najwięcej stopu</option><option value="items">Najmniej porcji</option><option value="primary">Oszczędzaj dodatki</option></select></label>
       </aside>
 
       <section class="panel materials">
@@ -69,6 +69,7 @@
     </div>
 
     <div id="bloomeryTool" class="tool-view">
+      <div class="untested-warning" role="status"><b>⚠ JESZCZE NIEPRZETESTOWANE</b><span>Kalkulator Bloomery może podawać nieprawidłowe wyniki.</span></div>
       <section class="workspace">
         <aside class="panel setup">
           <div class="panel-title"><span>01</span><div><h2>Parametry Bloomery</h2><p>Pojemność konstrukcji i materiał</p></div></div>
@@ -94,6 +95,19 @@
     </div>
 
     <div id="anvilTool" class="tool-view">
+      <section class="panel capture-panel">
+        <div class="panel-title"><span>00</span><div><h2>Odczytaj kowadło ze screena</h2><p>Przechwyć okno, wczytaj, wklej lub przeciągnij obraz</p></div></div>
+        <div class="capture-layout">
+          <div class="capture-actions">
+            <button id="captureScreen" class="capture-btn" type="button">▣ Uruchom podgląd Minecrafta</button>
+            <button id="uploadAnvil" class="capture-btn secondary" type="button">↑ Wczytaj screenshot</button>
+            <input id="anvilFile" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+            <button id="analyzeAnvil" class="capture-btn secondary" type="button" disabled>◎ Odczytaj wartości</button>
+            <p class="field-help">Podgląd sam znajduje GUI w całym oknie i na bieżąco aktualizuje wartości. Możesz też wkleić obraz skrótem Ctrl+V.</p>
+          </div>
+          <div><div id="captureDrop" class="capture-drop"><canvas id="anvilCanvas"></canvas><div class="capture-placeholder">Przeciągnij tutaj screenshot kowadła</div></div><p id="captureStatus" class="capture-status">Oczekiwanie na obraz…</p></div>
+        </div>
+      </section>
       <section class="workspace">
         <aside class="panel setup">
           <div class="panel-title"><span>01</span><div><h2>Pozycja na kowadle</h2><p>Odczytaj wartości z interfejsu gry</p></div></div>
@@ -106,15 +120,15 @@
         <section class="panel materials">
           <div class="panel-title"><span>02</span><div><h2>Reguły końcowe</h2><p>Ustaw ikony od lewej do prawej</p></div></div>
           <div class="three-col">
-            <label>3. od końca<select id="ruleThird" class="anvil-rule"></select></label>
-            <label>2. od końca<select id="ruleSecond" class="anvil-rule"></select></label>
-            <label>Ostatnia<select id="ruleLast" class="anvil-rule"></select></label>
+            <label>3. od końca<select id="ruleThird" class="anvil-rule"></select><span class="rule-preview"></span></label>
+            <label>2. od końca<select id="ruleSecond" class="anvil-rule"></select><span class="rule-preview"></span></label>
+            <label>Ostatnia<select id="ruleLast" class="anvil-rule"></select><span class="rule-preview"></span></label>
           </div>
           <div class="action-legend"><span>Hit: −3/−6/−9</span><span>Draw: −15</span><span>Punch: +2</span><span>Bend: +7</span><span>Upset: +13</span><span>Shrink: +16</span></div>
         </section>
       </section>
       <button id="anvilCalculate" class="calculate"><span>ZNAJDŹ NAJKRÓTSZĄ SEKWENCJĘ</span><b>→</b></button>
-      <section id="anvilResults" class="results hidden"><div class="result-head"><div><p class="eyebrow">PERFECTLY FORGED</p><h2>Sekwencja uderzeń</h2></div><div class="badge">NAJKRÓTSZA ŚCIEŻKA</div></div><div id="anvilSequence" class="anvil-sequence"></div><p id="anvilNote" class="solver-note"></p></section>
+      <section id="anvilResults" class="results hidden"><div class="result-head"><div><p class="eyebrow">PERFECTLY FORGED</p><h2>Sekwencja uderzeń</h2></div><div class="badge">PLAN NA ŻYWO</div></div><div id="anvilNext" class="anvil-next"><span>NASTĘPNY KROK</span><b>—</b><small>Uruchom solver</small></div><div id="anvilSequence" class="anvil-sequence"></div><p id="anvilNote" class="solver-note"></p></section>
     </div>
   </main>
   <footer>Mechaniki: TFG / TFC Field Guide · Kalkulatory działają lokalnie</footer>
