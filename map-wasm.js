@@ -3,7 +3,7 @@ globalThis.TFGWasm=(()=>{
   const layerCodes={terrain:0,rivers:1,elevation:2,rocks:3,kaolin:4,climate:5,temperature:6,rainfall:7};
   async function init(){
     if(instance)return instance;
-    if(!instancePromise)instancePromise=(async()=>{const imports={env:{abort(){throw Error('WASM abort')}}};try{const url='./map-kernel.wasm?v=034',response=await fetch(url),module=WebAssembly.instantiateStreaming?await WebAssembly.instantiateStreaming(response.clone(),imports):await WebAssembly.instantiate(await response.arrayBuffer(),imports);return instance=module.instance}catch{try{const response=await fetch('./map-kernel.wasm?v=034'),module=await WebAssembly.instantiate(await response.arrayBuffer(),imports);return instance=module.instance}catch{return null}}})();
+    if(!instancePromise)instancePromise=(async()=>{const imports={env:{abort(){throw Error('WASM abort')}}};try{const url='./map-kernel.wasm?v=035',response=await fetch(url),module=WebAssembly.instantiateStreaming?await WebAssembly.instantiateStreaming(response.clone(),imports):await WebAssembly.instantiate(await response.arrayBuffer(),imports);return instance=module.instance}catch{try{const response=await fetch('./map-kernel.wasm?v=035'),module=await WebAssembly.instantiate(await response.arrayBuffer(),imports);return instance=module.instance}catch{return null}}})();
     return instancePromise;
   }
   function copy(exports,array){const ptr=exports.alloc(array.byteLength),view=new Uint8Array(exports.memory.buffer,ptr,array.byteLength);view.set(new Uint8Array(array.buffer,array.byteOffset,array.byteLength));return ptr}
@@ -14,5 +14,6 @@ globalThis.TFGWasm=(()=>{
     e.render(temp,rain,continents,surfaces,elevations,rocks,rivers,kaolin,rockColors,out,result.width,result.height,layerCodes[layer]??0);
     return new Uint8ClampedArray(new Uint8Array(e.memory.buffer,out,result.width*result.height*4));
   }
-  return{init,render,get ready(){return!!instance}};
+  function fillRocks(result,task){if(!instance||!task)return false;const e=instance.exports;e.reset(),source=copy(e,task.source),coords=copy(e,task.coords),out=e.alloc(result.width*result.height);e.fillRocks(source,task.minX,task.minZ,task.width,task.height,coords,out,result.width*result.height,task.seed);result.rockCodes=new Uint8Array(new Uint8Array(e.memory.buffer,out,result.width*result.height));result.exactRocksReady=true;return true}
+  return{init,render,fillRocks,get ready(){return!!instance}};
 })();

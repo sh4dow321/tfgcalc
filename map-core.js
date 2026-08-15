@@ -164,18 +164,19 @@ function renderPixels(layer,width,height,temperatures,rainfalls,continents,surfa
 }
 
 function generateMap(data,onProgress=()=>{}){
-    const{version,seed:centerSeed,layer,centerX,centerZ,span,width,height}=data,seed=BigInt(centerSeed),world=getWorld(version,seed),quartReady=layer==='kaolin',riverRasterReady=layer==='rivers',count=width*height,temperatures=new Float32Array(count),rainfalls=new Float32Array(count),continents=new Float32Array(count),surfaces=new Uint8Array(count),elevations=new Uint8Array(count),rockCodes=new Uint8Array(count),biomeCodes=new Uint8Array(count),kaolinMasks=new Uint8Array(count),verticalSpan=data.verticalSpan??span*height/width,pointCache=new Map;
+    const{version,seed:centerSeed,layer,centerX,centerZ,span,width,height}=data,seed=BigInt(centerSeed),world=getWorld(version,seed),quartReady=layer==='kaolin',riverRasterReady=layer==='rivers',exactRocksReady=layer==='rocks'&&version==='1.20.1'&&!!world.region&&!data.skipExactRocks,count=width*height,temperatures=new Float32Array(count),rainfalls=new Float32Array(count),continents=new Float32Array(count),surfaces=new Uint8Array(count),elevations=new Uint8Array(count),rockCodes=new Uint8Array(count),biomeCodes=new Uint8Array(count),kaolinMasks=new Uint8Array(count),verticalSpan=data.verticalSpan??span*height/width,pointCache=new Map,rockCache=new Map;
     for(let py=0;py<height;py++){
       const blockZ=centerZ+(py/(height-1)-.5)*verticalSpan,gridZ=blockZ/128;
       for(let px=0;px<width;px++){
         const blockX=centerX+(px/(width-1)-.5)*span,gridX=blockX/128,index=py*width+px;
         let regionPoint=null;if(world.region){const scale=quartReady?4:128,key=`${Math.floor(blockX/scale)},${Math.floor(blockZ/scale)}`;regionPoint=pointCache.get(key);if(!regionPoint){regionPoint=quartReady?world.region.sample(blockX,blockZ):world.region.sampleRegional(blockX,blockZ);if(pointCache.size>150000)pointCache.clear();pointCache.set(key,regionPoint)}}
         const raw=world.rawClimate(gridX,gridZ),temperature=regionPoint?.temperature??raw.temperature,rainfall=regionPoint?.rainfall??raw.rainfall,continent=world.continent(gridX,gridZ);
-        temperatures[index]=temperature;rainfalls[index]=rainfall;continents[index]=continent;surfaces[index]=regionPoint?Number(regionPoint.land):Number(continent>4.4);elevations[index]=regionPoint?.altitude||0;rockCodes[index]=codeOf(ROCK_NAMES,regionPoint?.rock||'Unknown');biomeCodes[index]=codeOf(BIOME_NAMES,regionPoint?.biome||'Unknown');kaolinMasks[index]=Number(regionPoint?.kaolinEligible||false);
+        temperatures[index]=temperature;rainfalls[index]=rainfall;continents[index]=continent;surfaces[index]=regionPoint?Number(regionPoint.land):Number(continent>4.4);elevations[index]=regionPoint?.altitude||0;if(exactRocksReady){const rx=Math.floor(blockX),rz=Math.floor(blockZ),key=`${rx},${rz}`;let rock=rockCache.get(key);if(!rock){rock=world.region.sampleSurfaceRock(rx,rz);rockCache.set(key,rock)}rockCodes[index]=codeOf(ROCK_NAMES,rock)}biomeCodes[index]=codeOf(BIOME_NAMES,regionPoint?.biome||'Unknown');kaolinMasks[index]=Number(regionPoint?.kaolinEligible||false);
       }
       if(py%32===0)onProgress(py/height);
     }
     const riverMasks=world.region&&riverRasterReady?world.region.rasterRivers(centerX,centerZ,span,width,height,verticalSpan,data.displaySpan??span):new Uint8Array(count),pixels=data.skipRender?new Uint8ClampedArray(count*4):renderPixels(layer,width,height,temperatures,rainfalls,continents,surfaces,elevations,rockCodes,riverMasks,kaolinMasks);
-    return{type:'result',width,height,pixels,temperatures,rainfalls,continents,surfaces,elevations,rockCodes,biomeCodes,riverMasks,kaolinMasks,quartReady,riverRasterReady};
+    return{type:'result',width,height,pixels,temperatures,rainfalls,continents,surfaces,elevations,rockCodes,biomeCodes,riverMasks,kaolinMasks,quartReady,riverRasterReady,exactRocksReady};
 }
-globalThis.TFGMapCore={generateMap,renderPixels,ROCK_NAMES,BIOME_NAMES,_internals:{Xoroshiro128PlusPlus,Cellular2D,U64,foldLong,clamp,simplex,triangle}};
+function prepareRockTask(data){const world=getWorld(data.version,BigInt(data.seed));if(!world.region)return null;return world.region.prepareSurfaceRockTask(data.centerX,data.centerZ,data.span,data.verticalSpan??data.span*data.height/data.width,data.width,data.height)}
+globalThis.TFGMapCore={generateMap,prepareRockTask,renderPixels,ROCK_NAMES,BIOME_NAMES,_internals:{Xoroshiro128PlusPlus,Cellular2D,U64,foldLong,clamp,simplex,triangle}};
