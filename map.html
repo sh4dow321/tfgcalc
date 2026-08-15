@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#16130f">
+  <title>TFG Toolkit — mapa seeda</title>
+  <link rel="stylesheet" href="styles.css?v=032">
+  <link rel="stylesheet" href="map.css?v=032">
+</head>
+<body data-tool="map">
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">T</span><span>TFG <b>TOOLKIT</b></span></a>
+    <div class="top-actions"><button id="resetMap" class="ghost" type="button">↻ Wycentruj</button><span class="version">Modern · 0.32</span></div>
+  </header>
+
+  <main class="map-main">
+    <section class="hero map-hero">
+      <div><p class="eyebrow">TFC WORLDGEN</p><h1>Mapa seeda</h1><p class="lede">Mapa regionów liczona lokalnie z seeda TFC. Przeciągnij widok, użyj kółka myszy do zmiany skali i wskaż punkt, aby odczytać dane.</p></div>
+    </section>
+
+    <nav class="tool-tabs" aria-label="Narzędzia">
+      <a class="tool-tab" href="index.html">⚗ Stopy</a>
+      <a class="tool-tab" href="bloomery.html">♨ Bloomery</a>
+      <a class="tool-tab" href="anvil.html">⚒ Kowadło</a>
+      <a class="tool-tab active" href="map.html" aria-current="page">⌖ Mapa seeda</a>
+    </nav>
+
+    <div class="untested-warning" role="status"><b>⚠ GENERATOR REGIONÓW — TESTY</b><span>Dla TFC 3.2.23 mapa uwzględnia wyspy, góry, rzeki, jeziora i końcowy quart-scale biome layer. Warstwa kaolinu pokazuje obszary spełniające biom oraz klimat; nie oznacza gwarantowanego złoża, ponieważ właściwa żyła ma jeszcze rzadkość 1/40 i wymaga Y 75–110. TFC 4.2.7 nadal korzysta z podglądu kontynentów.</span></div>
+
+    <section class="seed-map-layout">
+      <aside class="panel map-controls">
+        <div class="panel-title"><span>01</span><div><h2>Generator</h2><p>Wybierz dokładną parę TFC i Viewera</p></div></div>
+        <label>Wersja generatora
+          <select id="mapVersion">
+            <option value="1.20.1">Minecraft 1.20.1 · TFC 3.2.23 · Viewer 1.5.1</option>
+            <option value="1.21.1">Minecraft 1.21.1 · TFC 4.2.7 · Viewer 2.1.1</option>
+          </select>
+        </label>
+        <label>Seed świata
+          <input id="mapSeed" inputmode="numeric" autocomplete="off" spellcheck="false" value="0" placeholder="np. -742918461234567890">
+        </label>
+        <label>Warstwa
+          <select id="mapLayer">
+            <option value="terrain" selected>Teren regionalny</option>
+            <option value="rivers" data-region-v20>Rzeki i główne dopływy · TFC 3.2.23</option>
+            <option value="elevation" data-region-v20>Elewacja / góry · TFC 3.2.23</option>
+            <option value="rocks" data-region-v20>Skała powierzchniowa · TFC 3.2.23</option>
+            <option value="kaolin" data-region-v20>Kaolinite clay — potencjał · TFC 3.2.23</option>
+            <option value="climate">Klimat</option>
+            <option value="temperature">Temperatura bazowa</option>
+            <option value="rainfall">Opady bazowe</option>
+          </select>
+        </label>
+        <div class="two-col">
+          <label>Środek X<input id="mapCenterX" type="number" step="128" value="0"></label>
+          <label>Środek Z<input id="mapCenterZ" type="number" step="128" value="0"></label>
+        </div>
+        <label>Szerokość widoku
+          <select id="mapSpan">
+            <option value="4000">4 000 bloków</option>
+            <option value="8000">8 000 bloków</option>
+            <option value="16000">16 000 bloków</option>
+            <option value="32000" selected>32 000 bloków</option>
+            <option value="64000">64 000 bloków</option>
+            <option value="128000">128 000 bloków</option>
+          </select>
+        </label>
+        <button id="generateMap" class="calculate map-generate" type="button"><span>GENERUJ MAPĘ</span><b>→</b></button>
+        <div class="map-legend" aria-label="Legenda"><span id="legendMin">głęboki ocean</span><i id="legendBar"></i><span id="legendMax">wysoki ląd</span></div>
+        <div id="rockLegend" class="rock-key" aria-label="Legenda skał" hidden></div>
+        <p class="field-help map-source-note">Każdy tryb zachowuje normalny teren pod półprzezroczystą nakładką. Położenie kontynentów, temperatura i opady korzystają z seeda oraz kolejności RNG wybranej wersji TFC.</p>
+      </aside>
+
+      <section class="panel map-panel">
+        <div class="map-toolbar">
+          <div><b id="mapTitle">Teren regionalny</b><span id="mapSubtitle">X 0 · Z 0 · 32 000 bloków</span></div>
+          <button id="downloadMap" class="capture-btn secondary" type="button" disabled>↓ Zapisz PNG</button>
+        </div>
+        <div id="mapViewport" class="map-viewport">
+          <canvas id="seedMap" width="640" height="640" aria-label="Mapa seeda"></canvas>
+          <div id="mapCrosshair" class="map-crosshair" hidden></div>
+          <div id="mapLoading" class="map-loading"><b>Wpisz seed i wygeneruj mapę</b><span>Obliczenia wykonuje osobny Worker.</span></div>
+        </div>
+        <div class="map-readout">
+          <span>Pozycja: <b id="cursorCoords">—</b></span>
+          <span>Powierzchnia: <b id="cursorSurface">—</b></span>
+          <span>Biom: <b id="cursorBiome">—</b></span>
+          <span>Elewacja: <b id="cursorElevation">—</b></span>
+          <span>Skała: <b id="cursorRock">—</b></span>
+          <span>Rzeka: <b id="cursorRiver">—</b></span>
+          <span>Kaolin: <b id="cursorKaolin">—</b></span>
+          <span>Temperatura: <b id="cursorTemp">—</b></span>
+          <span>Opady: <b id="cursorRain">—</b></span>
+        </div>
+        <p id="mapStatus" class="capture-status" role="status">Gotowe do generowania.</p>
+      </section>
+    </section>
+  </main>
+  <footer>Generator: TerraFirmaCraft · Obliczenia mapy działają lokalnie</footer>
+  <script defer src="fastnoise-lite.js?v=032"></script>
+  <script defer src="map-core.js?v=032"></script>
+  <script defer src="region-v20.js?v=032"></script>
+  <script defer src="map.js?v=032"></script>
+</body>
+</html>

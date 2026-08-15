@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#16130f">
   <title>TFG Toolkit — solver kowadła</title>
-  <link rel="stylesheet" href="styles.css?v=024">
+  <link rel="stylesheet" href="styles.css?v=032">
 </head>
 <body data-tool="anvil">
   <header class="topbar">
     <a class="brand" href="#"><span class="brand-mark">T</span><span>TFG <b>TOOLKIT</b></span></a>
-    <div class="top-actions"><button id="resetBtn" class="ghost">↻ Wyczyść</button><span class="version">Modern · 0.24</span></div>
+    <div class="top-actions"><button id="resetBtn" class="ghost">↻ Wyczyść</button><span class="version">Modern · 0.32</span></div>
   </header>
 
   <main>
@@ -22,6 +22,7 @@
       <a class="tool-tab active" data-tool="alloy" href="index.html">⚗ Stopy</a>
       <a class="tool-tab" data-tool="bloomery" href="bloomery.html">♨ Bloomery</a>
       <a class="tool-tab" data-tool="anvil" href="anvil.html">⚒ Kowadło</a>
+      <a class="tool-tab" href="map.html">⌖ Mapa seeda</a>
     </nav>
 
     <div id="alloyTool" class="tool-view active">
@@ -118,11 +119,11 @@
           <p class="field-help">Do odczytania dokładnego celu potrzebny jest resource pack pokazujący wartości kowadła.</p>
         </aside>
         <section class="panel materials">
-          <div class="panel-title"><span>02</span><div><h2>Reguły końcowe</h2><p>Ustaw ikony od lewej do prawej</p></div></div>
+          <div class="panel-title"><span>02</span><div><h2>Reguły końcowe</h2><p>Ikona oraz ograniczenie odczytane z kresek pod nią</p></div></div>
           <div class="three-col">
-            <label>3. od końca<select id="ruleThird" class="anvil-rule"></select><span class="rule-preview"></span></label>
-            <label>2. od końca<select id="ruleSecond" class="anvil-rule"></select><span class="rule-preview"></span></label>
-            <label>Ostatnia<select id="ruleLast" class="anvil-rule"></select><span class="rule-preview"></span></label>
+            <label>Reguła 1 (lewa)<select id="ruleLast" class="anvil-rule"></select><select id="ruleLastConstraint" class="anvil-constraint" aria-label="Pozycja reguły 1"></select><span class="rule-preview"></span></label>
+            <label>Reguła 2<select id="ruleSecond" class="anvil-rule"></select><select id="ruleSecondConstraint" class="anvil-constraint" aria-label="Pozycja reguły 2"></select><span class="rule-preview"></span></label>
+            <label>Reguła 3 (prawa)<select id="ruleThird" class="anvil-rule"></select><select id="ruleThirdConstraint" class="anvil-constraint" aria-label="Pozycja reguły 3"></select><span class="rule-preview"></span></label>
           </div>
           <div class="action-legend"><span>Hit: −3/−6/−9</span><span>Draw: −15</span><span>Punch: +2</span><span>Bend: +7</span><span>Upset: +13</span><span>Shrink: +16</span></div>
         </section>
@@ -132,6 +133,6 @@
     </div>
   </main>
   <footer>Mechaniki: TFG / TFC Field Guide · Kalkulatory działają lokalnie</footer>
-  <script src="app.js?v=024"></script>
+  <script src="app.js?v=032"></script>
 </body>
 </html>
