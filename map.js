@@ -42,7 +42,7 @@ function generate(){
   if(workerBusy){worker?.terminate();worker=null;workerBusy=false}
   pendingMap=emptyMap(width,height,settings);
   if(lastMap)loading.className='map-loading hidden';else{loading.className='map-loading busy';loading.innerHTML='<b>Generowanie mapy kafelkami…</b><span>0%</span>'}generateButton.disabled=true;$('#downloadMap').disabled=true;setStatus(location.protocol==='file:'?'Tryb lokalny — generowanie bez Workera…':'Dorysowywanie kafelków mapy…','progress');updateHeader(settings);
-  const finish=data=>{pendingMap.quartReady=data.quartReady;pendingMap.riverRasterReady=data.riverRasterReady;lastMap=pendingMap;pendingMap=null;workerBusy=false;loading.classList.add('hidden');generateButton.disabled=false;$('#downloadMap').disabled=false;setStatus(`Gotowe — ${width.toLocaleString('pl-PL')} × ${height.toLocaleString('pl-PL')} próbek. Wersja ${settings.version}.`,'ok');const query=new URLSearchParams({v:settings.version,seed:settings.seed,layer:settings.layer,x:settings.centerX,z:settings.centerZ,span:settings.span});try{history.replaceState(null,'',`${location.pathname}?${query}`)}catch{}};
+  const finish=data=>{pendingMap.quartReady=data.quartReady;pendingMap.riverRasterReady=data.riverRasterReady;pendingMap.usedWasm=!!data.usedWasm;lastMap=pendingMap;pendingMap=null;workerBusy=false;loading.classList.add('hidden');generateButton.disabled=false;$('#downloadMap').disabled=false;setStatus(`Gotowe — ${width.toLocaleString('pl-PL')} × ${height.toLocaleString('pl-PL')} próbek · ${data.usedWasm?'WASM':'JS fallback'}. Wersja ${settings.version}.`,'ok');const query=new URLSearchParams({v:settings.version,seed:settings.seed,layer:settings.layer,x:settings.centerX,z:settings.centerZ,span:settings.span});try{history.replaceState(null,'',`${location.pathname}?${query}`)}catch{}};
   const handleData=data=>{
     if(data.requestId!==undefined&&data.requestId!==requestId)return;
     if(data.type==='error'){workerBusy=false;loading.className='map-loading';loading.innerHTML='<b>Nie udało się wygenerować mapy</b><span>Sprawdź seed i spróbuj ponownie.</span>';generateButton.disabled=false;setStatus(data.message,'bad');return}
@@ -53,7 +53,7 @@ function generate(){
   const generateLocally=()=>{if(fallbackStarted)return;fallbackStarted=true;worker?.terminate();worker=null;workerBusy=false;setStatus('Worker jest niedostępny — generowanie lokalne w głównym skrypcie…','progress');setTimeout(()=>{try{handleData(TFGMapCore.generateMap({...settings,width,height}))}catch(error){handleData({type:'error',message:error?.message||String(error)})}},30)};
   if(location.protocol==='file:'||typeof Worker==='undefined'){generateLocally();return}
   try{
-    if(!worker)worker=new Worker('map-worker.js?v=033');workerBusy=true;
+    if(!worker)worker=new Worker('map-worker.js?v=034');workerBusy=true;
     worker.onmessage=event=>handleData(event.data);
     worker.onerror=()=>generateLocally();
     worker.postMessage({...settings,width,height,requestId,tileSize:128});

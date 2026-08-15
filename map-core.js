@@ -175,7 +175,7 @@ function generateMap(data,onProgress=()=>{}){
       }
       if(py%32===0)onProgress(py/height);
     }
-    const riverMasks=world.region&&riverRasterReady?world.region.rasterRivers(centerX,centerZ,span,width,height,verticalSpan,data.displaySpan??span):new Uint8Array(count),pixels=renderPixels(layer,width,height,temperatures,rainfalls,continents,surfaces,elevations,rockCodes,riverMasks,kaolinMasks);
+    const riverMasks=world.region&&riverRasterReady?world.region.rasterRivers(centerX,centerZ,span,width,height,verticalSpan,data.displaySpan??span):new Uint8Array(count),pixels=data.skipRender?new Uint8ClampedArray(count*4):renderPixels(layer,width,height,temperatures,rainfalls,continents,surfaces,elevations,rockCodes,riverMasks,kaolinMasks);
     return{type:'result',width,height,pixels,temperatures,rainfalls,continents,surfaces,elevations,rockCodes,biomeCodes,riverMasks,kaolinMasks,quartReady,riverRasterReady};
 }
 globalThis.TFGMapCore={generateMap,renderPixels,ROCK_NAMES,BIOME_NAMES,_internals:{Xoroshiro128PlusPlus,Cellular2D,U64,foldLong,clamp,simplex,triangle}};
