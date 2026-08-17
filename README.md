@@ -99,3 +99,5 @@ Zalecana jest aktualna wersja Firefox, Chrome albo Edge. Funkcja podglądu Minec
 ## Informacja
 
 Projekt jest nieoficjalnym narzędziem społecznościowym i nie jest powiązany z twórcami TerraFirmaGreg ani TerraFirmaCraft. Wyniki zależne od wersji moda warto potwierdzić w grze lub aktualnym Field Guide.
+
+Projekt był tworzony przy wsparciu narzędzi AI. Implementacja była następnie sprawdzana testami oraz porównywana z danymi i recepturami odpowiednich wersji modów.

@@ -15,6 +15,7 @@
 /* Kompaktowy nagłówek narzędzia */
 body{background:var(--bg)}
 .topbar{height:60px}
+.language-switch{display:flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}.lang-btn{min-width:34px;height:28px;padding:0 8px;border:0;border-right:1px solid var(--line);background:#181510;color:var(--muted);font-size:10px;font-weight:900;cursor:pointer}.lang-btn:last-child{border-right:0}.lang-btn.active{background:var(--orange);color:#24140c}.top-actions{gap:12px}
 main{padding:26px 24px 90px}
 .hero{display:block;margin:0 0 16px;padding:18px 20px;background:#1b1712;border:1px solid var(--line);border-radius:6px}
 .ingot-art{display:none}

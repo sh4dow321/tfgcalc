@@ -53,7 +53,7 @@ function generate(){
   const generateLocally=()=>{if(fallbackStarted)return;fallbackStarted=true;worker?.terminate();worker=null;workerBusy=false;setStatus('Worker jest niedostępny — generowanie lokalne w głównym skrypcie…','progress');setTimeout(()=>{try{handleData(TFGMapCore.generateMap({...settings,width,height}))}catch(error){handleData({type:'error',message:error?.message||String(error)})}},30)};
   if(location.protocol==='file:'||typeof Worker==='undefined'){generateLocally();return}
   try{
-    if(!worker)worker=new Worker('map-worker.js?v=035');workerBusy=true;
+    if(!worker)worker=new Worker('assets/map/map-worker.js?v=035');workerBusy=true;
     worker.onmessage=event=>handleData(event.data);
     worker.onerror=()=>generateLocally();
     worker.postMessage({...settings,width,height,requestId,tileSize:128});
